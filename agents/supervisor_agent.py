@@ -1,6 +1,6 @@
 from langgraph.prebuilt import create_react_agent
-from .handoff_tool import transfer_to_flight_assistant, transfer_to_hotel_assistant, transfer_to_attraction_assistant
-from .llm import get_kimi_llm
+from tools.handoff_tool import transfer_to_flight_assistant, transfer_to_hotel_assistant, transfer_to_attraction_assistant
+from agents.llm import get_kimi_llm
 
 supervisor_agent = create_react_agent(
     name="supervisor_agent",

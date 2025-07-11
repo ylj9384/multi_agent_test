@@ -1,11 +1,7 @@
 from langgraph.prebuilt import create_react_agent
-from .handoff_tool import transfer_to_flight_assistant, transfer_to_attraction_assistant
-from .llm import get_kimi_llm
-
-# 业务工具
-def book_hotel(hotel_name: str):
-    """Book a hotel stay"""
-    return f"Successfully booked stay at {hotel_name}."
+from tools.hotel_tools import book_hotel
+from tools.handoff_tool import transfer_to_flight_assistant, transfer_to_attraction_assistant
+from agents.llm import get_kimi_llm
 
 hotel_assistant = create_react_agent(
     name="hotel_assistant",

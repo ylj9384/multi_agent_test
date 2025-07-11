@@ -8,6 +8,6 @@ def get_kimi_llm():
     return ChatOpenAI(
 	base_url="https://api.moonshot.cn/v1",
 	model="moonshot-v1-8k",
-	openai_api_key=os.environ.get("MOONSHOT_API_KEY")
+	openai_api_key=os.environ.get("OPENAI_API_KEY")
 )
 
