@@ -1,0 +1,18 @@
+multi_agent/
+├── agents/                  # Agent 定义与工具封装
+│   ├── __init__.py
+│   ├── flight_assistant.py  # 航班助理定义
+│   ├── hotel_assistant.py   # 酒店助理定义
+│   └── handoff_tool.py      # 转接工具工厂与实例化
+│
+├── core/                    # 核心框架与 Graph 管理
+│   ├── __init__.py
+│   ├── graph_builder.py     # 创建并编排 StateGraph
+│   └── state_types.py       # 定义 MessagesState、Command
+│
+├── utils/                   # 通用工具函数
+│   ├── __init__.py
+│   └── printer.py           # pretty_print_messages 等打印工具
+│
+├── main.py                  # 启动脚本
+└── README.md

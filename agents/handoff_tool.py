@@ -1,0 +1,41 @@
+from typing import Annotated
+from langchain_core.tools import tool, InjectedToolCallId
+from langgraph.prebuilt import InjectedState
+from langgraph.graph import START, MessagesState
+from langgraph.types import Command
+# 动态生成“交接工具”，用于把对话流程从当前智能体切换到指定的另一个智能体。
+def create_handoff_tool(*, agent_name: str, description: str | None = None):
+    name = f"transfer_to_{agent_name}"
+    description = description or f"Transfer to {agent_name}"
+
+    @tool(name, description=description)
+    def handoff_tool(
+        state: Annotated[MessagesState, InjectedState], 
+        tool_call_id: Annotated[str, InjectedToolCallId],
+    ) -> Command:
+        tool_message = {
+            "role": "tool",
+            "content": f"Successfully transferred to {agent_name}",
+            "name": name,
+            "tool_call_id": tool_call_id,
+        }
+        return Command(  
+            goto=agent_name,  
+            update={"messages": state["messages"] + [tool_message]},  
+            graph=Command.PARENT,  
+        )
+    return handoff_tool
+
+# Handoffs
+transfer_to_hotel_assistant = create_handoff_tool(
+    agent_name="hotel_assistant",
+    description="Transfer user to the hotel-booking assistant.",
+)
+transfer_to_flight_assistant = create_handoff_tool(
+    agent_name="flight_assistant",
+    description="Transfer user to the flight-booking assistant.",
+)
+transfer_to_attraction_assistant = create_handoff_tool(
+    agent_name="attraction_assistant",
+    description="Transfer user to the attraction-ticket booking assistant.",
+)
